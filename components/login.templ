@@ -1,0 +1,48 @@
+package components
+
+import "github.com/Depado/pb-templ-htmx-todo/assets"
+import "github.com/Depado/pb-templ-htmx-todo/components/shared"
+
+templ LoginPage() {
+	@shared.Page("login") {
+		@LoginPartial()
+	}
+}
+
+templ LoginPartial() {
+	<div class="hero min-h-screen bg-base-200">
+		<div class="hero-content flex-col lg:flex-row-reverse">
+			<div class="text-center lg:text-left">
+				<h1 class="text-5xl font-bold">Login</h1>
+				<p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+			</div>
+			<div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+				<form class="card-body">
+					<div class="form-control">
+						<label class="input input-bordered flex items-center gap-2">
+							@assets.MailIcon()
+							<input type="text" class="grow" placeholder="Email" required/>
+						</label>
+					</div>
+					<div class="form-control">
+						<label class="input input-bordered flex items-center gap-2">
+							@assets.PasswordIcon()
+							<input type="password" class="grow" placeholder="Password" required/>
+						</label>
+					</div>
+					<div class="form-control mt-6">
+						<button class="btn btn-primary">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+}
+
+templ Login(hx bool) {
+	if hx {
+		@LoginPartial()
+	} else {
+		@LoginPage()
+	}
+}

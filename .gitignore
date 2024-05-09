@@ -19,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+node_modules/
+pb-templ-htmx-todo
+pb_data/

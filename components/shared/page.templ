@@ -1,0 +1,22 @@
+package shared
+
+templ Page(title string) {
+	<!DOCTYPE html>
+	<html lang="en" class="h-full">
+		<head>
+			<meta charset="UTF-8"/>
+			<title>{ title }</title>
+			<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<meta name="robots" content="index, follow"/>
+			<meta name="revisit-after" content="7 days"/>
+			<meta name="language" content="English"/>
+			<link rel="icon" type="image/x-icon" href="/static/favicon.svg"/>
+			<link rel="stylesheet" href="/static/styles.css"/>
+			<script src="/static/htmx.min.js"></script>
+		</head>
+		<body class="h-full">
+			{ children... }
+		</body>
+	</html>
+}
