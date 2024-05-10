@@ -4,18 +4,20 @@
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-embed: # Embed generated files if any
+generate: assets # Embed generated assets
 	go generate ./...
 
-generate: # Generate templ and tailwind css
+templ: # Generate templ files
 	templ generate
-	bunx tailwindcss -i ./assets/tailwind.css -o ./assets/dist/styles.css
 
-build: generate embed # Generate, embed and build with proper flags
-	go build -ldflags="-s -w"
+assets: templ # Generate CSS based on templ files
+	bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css
 
-run: generate # Generate templ and tailwind, then run the server
+build: generate # Generate, embed and build with proper flags
+	go build -ldflags="-s -w" -o htmxtodo
+
+run: generate # Run the server
 	go run main.go serve
 
-dev: # Watch file changes
+dev: # Run in dev mode with file watching
 	wgo -file=.go -file=.templ -xfile=_templ.go make run

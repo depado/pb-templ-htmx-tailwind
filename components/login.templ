@@ -3,12 +3,6 @@ package components
 import "github.com/Depado/pb-templ-htmx-todo/assets"
 import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 
-templ LoginPage() {
-	@shared.Page("login") {
-		@LoginPartial()
-	}
-}
-
 templ LoginPartial() {
 	<div class="hero min-h-screen bg-base-200">
 		<div class="hero-content flex-col lg:flex-row-reverse">
@@ -43,6 +37,8 @@ templ Login(hx bool) {
 	if hx {
 		@LoginPartial()
 	} else {
-		@LoginPage()
+		@shared.Page("Login") {
+			@LoginPartial()
+		}
 	}
 }

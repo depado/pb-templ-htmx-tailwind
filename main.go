@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
@@ -28,7 +29,7 @@ func main() {
 	})
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		e.Router.GET("/static/*", assets.AssetsHandler(isGoRun))
+		e.Router.GET("/static/*", assets.AssetsHandler(isGoRun), middleware.Gzip())
 
 		e.Router.GET("/", func(c echo.Context) error {
 			c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)

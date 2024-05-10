@@ -21,5 +21,6 @@
 go.work
 
 node_modules/
-pb-templ-htmx-todo
 pb_data/
+pb-templ-htmx-todo
+htmxtodo
