@@ -25,7 +25,7 @@ func HomePartial() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"home-partial\" class=\"hero min-h-screen bg-base-200\"><div class=\"hero-content text-center\"><div class=\"max-w-md\"><h1 class=\"text-5xl font-bold\">Hey there</h1><p class=\"py-6\">A random text</p><button class=\"btn btn-primary\" hx-get=\"/login\" hx-trigger=\"click\" hx-target=\"#home-partial\" hx-replace-url=\"true\" hx-push-url=\"true\">Go to login page</button></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"home-partial\" class=\"hero min-h-screen bg-base-200\"><div class=\"hero-content text-center\"><div class=\"max-w-md\"><h1 class=\"text-5xl font-bold\">Hey there</h1><p class=\"py-6\">A random text</p><button class=\"btn btn-primary\" hx-get=\"/login\" hx-trigger=\"click\" hx-target=\"#main\" hx-replace-url=\"true\" hx-push-url=\"true\">Go to login page</button></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

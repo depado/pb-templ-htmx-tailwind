@@ -14,11 +14,9 @@ import (
 	// _ "github.com/Depado/pb-templ-htmx-todo/migrations"
 	"github.com/Depado/pb-templ-htmx-todo/assets"
 	"github.com/Depado/pb-templ-htmx-todo/components"
+	"github.com/Depado/pb-templ-htmx-todo/components/httperror"
+	"github.com/Depado/pb-templ-htmx-todo/utils"
 )
-
-func IsHtmxRequest(c echo.Context) bool {
-	return c.Request().Header.Get("HX-Request") == "true"
-}
 
 func main() {
 	app := pocketbase.New()
@@ -29,16 +27,17 @@ func main() {
 	})
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		e.Router.GET("/static/*", assets.AssetsHandler(isGoRun), middleware.Gzip())
+		e.Router.HTTPErrorHandler = httperror.CustomHTTPErrorHandler
+		e.Router.GET("/static/*", assets.AssetsHandler(app.Logger(), isGoRun), middleware.Gzip())
 
 		e.Router.GET("/", func(c echo.Context) error {
 			c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
-			return components.Home(IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
+			return components.Home(utils.IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
 		})
 
 		e.Router.GET("/login", func(c echo.Context) error {
 			c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
-			return components.Login(IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
+			return components.Login(utils.IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
 		})
 
 		return nil

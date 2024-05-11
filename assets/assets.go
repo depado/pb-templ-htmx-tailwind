@@ -3,7 +3,7 @@ package assets
 import (
 	"embed"
 	"io/fs"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -13,19 +13,19 @@ import (
 //go:embed all:dist
 var assets embed.FS
 
-func AssetsHandler(live bool) echo.HandlerFunc {
-	assetHandler := http.FileServer(GetFileSystem(live))
+func AssetsHandler(logger *slog.Logger, live bool) echo.HandlerFunc {
+	assetHandler := http.FileServer(GetFileSystem(logger, live))
 	return echo.WrapHandler(http.StripPrefix("/static/", assetHandler))
 }
 
-func GetFileSystem(live bool) http.FileSystem {
-
+func GetFileSystem(logger *slog.Logger, live bool) http.FileSystem {
+	l := logger.With("system", "assets")
 	if live {
-		log.Print("using live mode")
+		l.Info("using live mode")
 		return http.FS(os.DirFS("assets/dist"))
 	}
 
-	log.Print("using embed mode")
+	l.Info("using embedded mode")
 	fsys, err := fs.Sub(assets, "dist")
 	if err != nil {
 		panic(err)

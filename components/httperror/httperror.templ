@@ -1,0 +1,34 @@
+package httperror
+
+import "github.com/Depado/pb-templ-htmx-todo/components/shared"
+import "strconv"
+
+templ HTTPErrorPartial(code int, message string) {
+	<div class="hero min-h-screen bg-base-200">
+		<div class="hero-content flex-col lg:flex-row-reverse">
+			<div class="text-center">
+				<h1 class="text-5xl font-bold">{ strconv.Itoa(code) }</h1>
+				if message == "" {
+					switch code {
+						case 404:
+							<p class="py-6">This is not the page you're looking for</p>
+						default:
+							<p class="py-6">Something went wrong, sorry 🫶</p>
+					}
+				} else {
+					<p class="py-6">{ message }</p>
+				}
+			</div>
+		</div>
+	</div>
+}
+
+templ HTTPError(code int, message string, hx bool) {
+	if hx {
+		@HTTPErrorPartial(code, message)
+	} else {
+		@shared.Page("Error") {
+			@HTTPErrorPartial(code, message)
+		}
+	}
+}

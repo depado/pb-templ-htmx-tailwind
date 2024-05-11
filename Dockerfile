@@ -29,12 +29,12 @@ RUN go generate ./...
 
 # Build binary
 ENV GOCACHE=/root/.cache/go-build
-RUN --mount=type=cache,target="/root/.cache/go-build" go build -ldflags="-s -w" -o htmxtodo
+RUN --mount=type=cache,target="/root/.cache/go-build" go build -ldflags="-s -w" -o ptht
 
 # Serve step
 FROM gcr.io/distroless/static
 
-COPY --from=builder /app/htmxtodo htmxtodo
+COPY --from=builder /app/ptht ptht
 
 EXPOSE 8080
-ENTRYPOINT ["./htmxtodo", "serve", "--http=0.0.0.0:8080"]
+ENTRYPOINT ["./ptht", "serve", "--http=0.0.0.0:8080"]
