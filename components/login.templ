@@ -3,64 +3,71 @@ package components
 import "github.com/Depado/pb-templ-htmx-todo/assets"
 import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 
-templ LoginPartial() {
-	<div class="hero min-h-screen bg-base-200">
+templ LoginForm(lf LoginFormValue, err error) {
+	<div id="login-form" class="card shrink-0 w-full max-w-sm shadow-l bg-base-100">
+		<form class="card-body" method="POST" action="/login" hx-target="#login-form" hx-boost="true">
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@assets.MailIcon()
+					<input type="text" class="grow" placeholder="Email" name="email" value={lf.Email} required/>
+				</label>
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@assets.PasswordIcon()
+					<input type="password" class="grow" name="password" placeholder="Password" required/>
+				</label>
+			</div>
+			<div class="form-control mt-6">
+				<button class="btn btn-primary" type="submit">Login</button>
+			</div>
+			if err != nil {
+				<p class="text-error text-center">{ err.Error() }</p>
+			}
+		</form>
+	</div>
+}
+
+templ RegisterForm() {
+	<div class="card shrink-0 w-full max-w-sm shadow-l bg-base-100">
+		<form class="card-body" method="POST" action="/register" hx-boost="true">
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@assets.MailIcon()
+					<input type="text" class="grow" placeholder="Email" required/>
+				</label>
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@assets.PasswordIcon()
+					<input type="password" class="grow" placeholder="Password" required/>
+				</label>
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@assets.PasswordIcon()
+					<input type="password" class="grow" placeholder="Retype password" required/>
+				</label>
+			</div>
+			<div class="form-control mt-6">
+				<button class="btn btn-primary">Register</button>
+			</div>
+		</form>
+	</div>
+}
+
+templ LoginBody(lf LoginFormValue, err error) {
+	<div class="h-full hero flex-1 bg-base-200">
 		<div class="hero-content flex flex-col w-full lg:flex-row">
-			<div class="card shrink-0 w-full max-w-sm shadow-l bg-base-100">
-				<form class="card-body">
-					<div class="form-control">
-						<label class="input input-bordered flex items-center gap-2">
-							@assets.MailIcon()
-							<input type="text" class="grow" placeholder="Email" required/>
-						</label>
-					</div>
-					<div class="form-control">
-						<label class="input input-bordered flex items-center gap-2">
-							@assets.PasswordIcon()
-							<input type="password" class="grow" placeholder="Password" required/>
-						</label>
-					</div>
-					<div class="form-control mt-6">
-						<button class="btn btn-primary">Login</button>
-					</div>
-				</form>
-			</div>
+			@LoginForm(lf, err)
 			<div class="divider lg:divider-horizontal"></div>
-			<div class="card shrink-0 w-full max-w-sm shadow-l bg-base-100">
-				<form class="card-body">
-					<div class="form-control">
-						<label class="input input-bordered flex items-center gap-2">
-							@assets.MailIcon()
-							<input type="text" class="grow" placeholder="Email" required/>
-						</label>
-					</div>
-					<div class="form-control">
-						<label class="input input-bordered flex items-center gap-2">
-							@assets.PasswordIcon()
-							<input type="password" class="grow" placeholder="Password" required/>
-						</label>
-					</div>
-					<div class="form-control">
-						<label class="input input-bordered flex items-center gap-2">
-							@assets.PasswordIcon()
-							<input type="password" class="grow" placeholder="Retype password" required/>
-						</label>
-					</div>
-					<div class="form-control mt-6">
-						<button class="btn btn-primary">Register</button>
-					</div>
-				</form>
-			</div>
+			@RegisterForm()
 		</div>
 	</div>
 }
 
-templ Login(hx bool) {
-	if hx {
-		@LoginPartial()
-	} else {
-		@shared.Page("Login") {
-			@LoginPartial()
-		}
+templ Login(lf LoginFormValue, err error, hx bool) {
+	@shared.Base("Login") {
+		@LoginBody(lf, err)
 	}
 }

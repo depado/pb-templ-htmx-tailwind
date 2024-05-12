@@ -3,7 +3,7 @@ package components
 import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 
 templ HomePartial() {
-	<div id="home-partial" class="hero min-h-screen bg-base-200">
+	<div class="h-full hero bg-base-200">
 		<div class="hero-content text-center">
 			<div class="max-w-md">
 				<h1 class="text-5xl font-bold">Hey there</h1>
@@ -12,7 +12,7 @@ templ HomePartial() {
 					class="btn btn-primary"
 					hx-get="/login"
 					hx-trigger="click"
-					hx-target="#main"
+					hx-target="body"
 					hx-replace-url="true"
 					hx-push-url="true"
 				>
@@ -23,12 +23,8 @@ templ HomePartial() {
 	</div>
 }
 
-templ Home(hx bool) {
-	if hx {
+templ Home() {
+	@shared.Base("Home") {
 		@HomePartial()
-	} else {
-		@shared.Page("Home") {
-			@HomePartial()
-		}
 	}
 }

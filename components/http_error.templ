@@ -1,10 +1,10 @@
-package httperror
+package components
 
 import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 import "strconv"
 
 templ HTTPErrorPartial(code int, message string) {
-	<div class="hero min-h-screen bg-base-200">
+	<div class="hero full-h bg-base-200">
 		<div class="hero-content flex-col lg:flex-row-reverse">
 			<div class="text-center">
 				<h1 class="text-5xl font-bold">{ strconv.Itoa(code) }</h1>
@@ -27,7 +27,7 @@ templ HTTPError(code int, message string, hx bool) {
 	if hx {
 		@HTTPErrorPartial(code, message)
 	} else {
-		@shared.Page("Error") {
+		@shared.Base(strconv.Itoa(code)) {
 			@HTTPErrorPartial(code, message)
 		}
 	}

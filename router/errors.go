@@ -1,11 +1,12 @@
-package httperror
+package router
 
 import (
 	"net/http"
 
 	"github.com/labstack/echo/v5"
 
-	"github.com/Depado/pb-templ-htmx-todo/utils"
+	"github.com/Depado/pb-templ-htmx-todo/components"
+	"github.com/Depado/pb-templ-htmx-todo/htmx"
 )
 
 func CustomHTTPErrorHandler(c echo.Context, err error) {
@@ -16,5 +17,5 @@ func CustomHTTPErrorHandler(c echo.Context, err error) {
 
 	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
 	c.Response().Writer.WriteHeader(code)
-	HTTPError(code, "", utils.IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
+	components.HTTPError(code, "", htmx.IsHtmxRequest(c)).Render(c.Request().Context(), c.Response().Writer)
 }
