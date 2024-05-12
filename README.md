@@ -9,6 +9,11 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
 - [x] Integrate `templ` with PocketBase
 - [x] Integrate `tailwind` & `daisyUI` with `templ`
 - [x] Integrate `htmx` with `templ` and PocketBase
+- [ ] Auth
+  - [x] Simple login with a Pocketbase user
+  - [ ] Registering a new user
+  - [ ] Display user, customize navbar when logged-in
+  - [ ] Logout
 
 ## Development
 
@@ -33,6 +38,27 @@ $ make dev
 - Generate templ Go files
 - Generate minified CSS with tailwind & daisyUI based on templ files
 - Embed assets in Go binary (CSS, favicon, htmx, etc)
+
+### Dev mode
+
+When using `make dev`, every change to a `.go` or `.templ` will regenerate templ
+go files and the minified CSS file before restarting the server. It skips the
+embedding part of the build as there's no point in doing so (when running with
+`go run`, the files are served from the filesystem directly) and it tends to slow
+things down. The restart usually takes 1-2 seconds.
+
+<details>
+  <summary>Improvements</summary>
+
+  templ has a built-in
+  [hot reload](https://templ.guide/commands-and-tools/hot-reload/) feature that
+  works perfectly and can even restart the backend but only when a templ file is
+  modified. Attempts were made to combine `wgo` with the templ hot reload
+  feature but that doesn't seem to work properly as it leaves some processes
+  running in the background (possibly due to the use of Make).
+
+</details>
+
 
 ### Docker
 
