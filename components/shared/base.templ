@@ -1,0 +1,37 @@
+package shared
+
+import "github.com/pocketbase/pocketbase/models"
+
+// Context is the base context that needs to be injected in all pages
+type Context struct {
+	User *models.Record
+}
+
+templ Header(title string) {
+	<head>
+		<meta charset="UTF-8"/>
+		<title>{ title }</title>
+		<!-- Metadata -->
+		<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="revisit-after" content="7 days"/>
+		<meta name="language" content="English"/>
+		<!-- Static -->
+		<link rel="icon" type="image/x-icon" href="/static/favicon.svg"/>
+		<link rel="stylesheet" href="/static/styles.min.css"/>
+		<script src="/static/htmx.min.js"></script>
+	</head>
+}
+
+templ Base(c Context, title string) {
+	<!DOCTYPE html>
+	<html lang="en" data-theme="dark">
+		@Header(title)
+		<body class="flex flex-col h-screen">
+			@DrawerWrapper(c) {
+				{ children... }
+			}
+		</body>
+	</html>
+}

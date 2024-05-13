@@ -26,7 +26,7 @@ func HTTPErrorPartial(code int, message string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"hero full-h bg-base-200\"><div class=\"hero-content flex-col lg:flex-row-reverse\"><div class=\"text-center\"><h1 class=\"text-5xl font-bold\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-full hero bg-base-200\"><div class=\"hero-content flex-col lg:flex-row-reverse\"><div class=\"text-center\"><h1 class=\"text-5xl font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -86,7 +86,7 @@ func HTTPErrorPartial(code int, message string) templ.Component {
 	})
 }
 
-func HTTPError(code int, message string, hx bool) templ.Component {
+func HTTPError(c shared.Context, code int, message string, hx bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -120,7 +120,7 @@ func HTTPError(code int, message string, hx bool) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = shared.Base(strconv.Itoa(code)).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = shared.Base(c, strconv.Itoa(code)).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

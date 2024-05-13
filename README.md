@@ -23,14 +23,14 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
 - [Bun](https://bun.sh/)
   - Only used to generate CSS files with tailwind
 - [Make](https://www.gnu.org/software/make/)
+  - Optional but will *make* your life easier
 
 Once these two requirements are met:
 
 ```sh
 $ go install github.com/a-h/templ/cmd/templ@latest
-$ go install github.com/bokwoon95/wgo@latest
 $ bun install
-$ make dev
+$ make
 ```
 
 ### Build workflow
@@ -41,14 +41,21 @@ $ make dev
 
 ### Dev mode
 
-When using `make dev`, every change to a `.go` or `.templ` will regenerate templ
-go files and the minified CSS file before restarting the server. It skips the
-embedding part of the build as there's no point in doing so (when running with
-`go run`, the files are served from the filesystem directly) and it tends to slow
-things down. The restart usually takes 1-2 seconds.
+```sh
+$ go install github.com/bokwoon95/wgo@latest
+$ make dev
+```
+
+When using `make dev`, every change to a `.go` or `.templ` file will regenerate
+templ go files and the minified CSS file before restarting the server. It skips
+the embedding part of the build as there's no point in doing so (when running
+with `go run`, the files are served from the filesystem directly) and it tends
+to slow things down. The restart usually takes 1-2 seconds.
 
 <details>
   <summary>Improvements</summary>
+
+  #### Hot reload with templ
 
   templ has a built-in
   [hot reload](https://templ.guide/commands-and-tools/hot-reload/) feature that
@@ -56,6 +63,9 @@ things down. The restart usually takes 1-2 seconds.
   modified. Attempts were made to combine `wgo` with the templ hot reload
   feature but that doesn't seem to work properly as it leaves some processes
   running in the background (possibly due to the use of Make).
+
+  An extra make target `make templdev` leverages this feature and can be used
+  when mostly working on templ files.
 
 </details>
 

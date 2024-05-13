@@ -4,7 +4,7 @@ import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 import "strconv"
 
 templ HTTPErrorPartial(code int, message string) {
-	<div class="hero full-h bg-base-200">
+	<div class="h-full hero bg-base-200">
 		<div class="hero-content flex-col lg:flex-row-reverse">
 			<div class="text-center">
 				<h1 class="text-5xl font-bold">{ strconv.Itoa(code) }</h1>
@@ -23,11 +23,11 @@ templ HTTPErrorPartial(code int, message string) {
 	</div>
 }
 
-templ HTTPError(code int, message string, hx bool) {
+templ HTTPError(c shared.Context, code int, message string, hx bool) {
 	if hx {
 		@HTTPErrorPartial(code, message)
 	} else {
-		@shared.Base(strconv.Itoa(code)) {
+		@shared.Base(c, strconv.Itoa(code)) {
 			@HTTPErrorPartial(code, message)
 		}
 	}

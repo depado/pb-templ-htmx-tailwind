@@ -8,6 +8,7 @@ import (
 	"github.com/pocketbase/pocketbase/apis"
 
 	"github.com/Depado/pb-templ-htmx-todo/components"
+	"github.com/Depado/pb-templ-htmx-todo/components/shared"
 	"github.com/Depado/pb-templ-htmx-todo/htmx"
 )
 
@@ -30,7 +31,7 @@ func (ar *AppRouter) GetLogin(c echo.Context) error {
 		return c.Redirect(302, "/")
 	}
 
-	return components.Render(http.StatusOK, c, components.Login(components.LoginFormValue{}, nil, htmx.IsHtmxRequest(c)))
+	return components.Render(http.StatusOK, c, components.Login(shared.Context{}, components.LoginFormValue{}, nil, htmx.IsHtmxRequest(c)))
 }
 
 func (ar *AppRouter) PostLogin(c echo.Context) error {
@@ -58,5 +59,5 @@ func (ar *AppRouter) PostLogout(c echo.Context) error {
 		MaxAge:   -1,
 	})
 
-	return htmx.Redirect(c, "/login")
+	return htmx.Redirect(c, "/")
 }

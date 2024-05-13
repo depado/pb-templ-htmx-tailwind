@@ -55,7 +55,7 @@ func LoginForm(lf LoginFormValue, err error) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"password\" class=\"grow\" name=\"password\" placeholder=\"Password\" required></label></div><div class=\"form-control mt-6\"><button class=\"btn btn-primary\" type=\"submit\">Login</button></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"password\" class=\"grow\" name=\"password\" placeholder=\"Password\" required></label></div><div class=\"form-control mt-6\"><button class=\"no-animation btn btn-primary\" type=\"submit\">Login</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -126,7 +126,7 @@ func RegisterForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"password\" class=\"grow\" placeholder=\"Retype password\" required></label></div><div class=\"form-control mt-6\"><button class=\"btn btn-primary\">Register</button></div></form></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"password\" class=\"grow\" placeholder=\"Retype password\" required></label></div><div class=\"form-control mt-6\"><button class=\"no-animation btn btn-primary\">Register</button></div></form></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -150,7 +150,7 @@ func LoginBody(lf LoginFormValue, err error) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-full hero flex-1 bg-base-200\"><div class=\"hero-content flex flex-col w-full lg:flex-row\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-full hero bg-base-200\"><div class=\"hero-content flex flex-col w-full lg:flex-row\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -177,7 +177,7 @@ func LoginBody(lf LoginFormValue, err error) templ.Component {
 	})
 }
 
-func Login(lf LoginFormValue, err error, hx bool) templ.Component {
+func Login(c shared.Context, lf LoginFormValue, err error, hx bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -205,7 +205,7 @@ func Login(lf LoginFormValue, err error, hx bool) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = shared.Base("Login").Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = shared.Base(c, "Login").Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

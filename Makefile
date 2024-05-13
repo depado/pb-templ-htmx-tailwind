@@ -12,12 +12,12 @@ templ: # Generate templ files
 assets: # Generate CSS based on templ files
 	bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css
 
-.PHONY: generate
-generate: templ assets # Embed generated assets
+.PHONY: embed
+embed: templ assets # Embed generated assets
 	go generate ./...
 
 .PHONY: build
-build: generate # Generate, embed and build with proper flags
+build: embed # Generate, embed and build with proper flags
 	go build -ldflags="-s -w" -o ptht
 
 .PHONY: run
@@ -26,16 +26,19 @@ run: templ assets # Run the server
 
 .PHONY: dev
 dev: # Run in dev mode with file watching
-	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) --no-print-directory run
+	wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: \
+		bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css :: \
+		go run main.go serve
+
+.PHONY: templdev
+templdev: # Run with templ's hot reload proxy
+	templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"
+
+.PHONY: .templrun
+.templrun: assets # Not invokable because there's no point in running this without templ watch
+	go run main.go serve --http=127.0.0.1:8090
 
 # .PHONY: templdevwgo
 # templdevwgo:
 # 	wgo -exit -file=.go-xfile=_templ.go templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"
 
-# .PHONY: templdev
-# templdev:
-# 	templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"
-
-# .PHONY: templrun
-# templrun: assets
-# 	go run main.go serve

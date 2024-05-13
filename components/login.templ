@@ -19,7 +19,7 @@ templ LoginForm(lf LoginFormValue, err error) {
 				</label>
 			</div>
 			<div class="form-control mt-6">
-				<button class="btn btn-primary" type="submit">Login</button>
+				<button class="no-animation btn btn-primary" type="submit">Login</button>
 			</div>
 			if err != nil {
 				<p class="text-error text-center">{ err.Error() }</p>
@@ -50,14 +50,14 @@ templ RegisterForm() {
 				</label>
 			</div>
 			<div class="form-control mt-6">
-				<button class="btn btn-primary">Register</button>
+				<button class="no-animation btn btn-primary">Register</button>
 			</div>
 		</form>
 	</div>
 }
 
 templ LoginBody(lf LoginFormValue, err error) {
-	<div class="h-full hero flex-1 bg-base-200">
+	<div class="h-full hero bg-base-200">
 		<div class="hero-content flex flex-col w-full lg:flex-row">
 			@LoginForm(lf, err)
 			<div class="divider lg:divider-horizontal"></div>
@@ -66,8 +66,8 @@ templ LoginBody(lf LoginFormValue, err error) {
 	</div>
 }
 
-templ Login(lf LoginFormValue, err error, hx bool) {
-	@shared.Base("Login") {
+templ Login(c shared.Context, lf LoginFormValue, err error, hx bool) {
+	@shared.Base(c, "Login") {
 		@LoginBody(lf, err)
 	}
 }

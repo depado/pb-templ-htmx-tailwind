@@ -2,29 +2,22 @@ package components
 
 import "github.com/Depado/pb-templ-htmx-todo/components/shared"
 
-templ HomePartial() {
-	<div class="h-full hero bg-base-200">
+templ HomePartial(c shared.Context) {
+	<div class="h-full flex-auto hero bg-base-200">
 		<div class="hero-content text-center">
-			<div class="max-w-md">
-				<h1 class="text-5xl font-bold">Hey there</h1>
-				<p class="py-6">A random text</p>
-				<button
-					class="btn btn-primary"
-					hx-get="/login"
-					hx-trigger="click"
-					hx-target="body"
-					hx-replace-url="true"
-					hx-push-url="true"
-				>
-					Go to login page
-				</button>
+			<div class="max-w-md prose">
+				<h1>Hey there</h1>
+				if c.User != nil {
+					<h2>{ c.User.Email() }</h2>
+				}
+				<p>This is the main content</p>
 			</div>
 		</div>
 	</div>
 }
 
-templ Home() {
-	@shared.Base("Home") {
-		@HomePartial()
+templ Home(c shared.Context) {
+	@shared.Base(c, "Home") {
+		@HomePartial(c)
 	}
 }
