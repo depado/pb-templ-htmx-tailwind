@@ -1,0 +1,22 @@
+package auth
+
+import "github.com/Depado/pb-templ-htmx-todo/components/shared"
+
+type LoginPageForms struct {
+	LoginFormValue     LoginFormValue
+	LoginFormErrors    LoginFormErrors
+	RegisterFormValue  RegisterFormValue
+	RegisterFormErrors RegisterFormErrors
+}
+
+templ LoginPage(c shared.Context, lpf LoginPageForms) {
+	@shared.Base(c, "Login") {
+		<div class="h-full hero bg-base-200">
+			<div class="hero-content flex flex-col w-full lg:flex-row">
+				@LoginForm(lpf.LoginFormValue, lpf.LoginFormErrors, nil)
+				<div class="divider lg:divider-horizontal"></div>
+				@RegisterForm(lpf.RegisterFormValue, lpf.RegisterFormErrors, nil)
+			</div>
+		</div>
+	}
+}

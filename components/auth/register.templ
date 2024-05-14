@@ -1,0 +1,62 @@
+package auth
+
+import (
+	"github.com/Depado/pb-templ-htmx-todo/components/icons"
+)
+
+templ RegisterForm(rfv RegisterFormValue, rfe RegisterFormErrors, err error) {
+	<div id="register-form" class="card shrink-0 w-full max-w-sm shadow-l bg-base-100">
+		<form class="card-body" method="POST" action="/register" hx-target="#register-form" hx-replace-url="false" hx-boost="true">
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@icons.Mail()
+					<input type="text" class="grow" placeholder="Email" name={ EmailField } value={ rfv.Email } required/>
+				</label>
+				if rfe.Email != nil {
+					<div class="label">
+						<span class="text-error label-text-alt">{ rfe.Email.Error() }</span>
+					</div>
+				}
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@icons.User()
+					<input type="text" class="grow" placeholder="Username" name={ UsernameField } value={ rfv.Username } required/>
+				</label>
+				if rfe.Username != nil {
+					<div class="label">
+						<span class="text-error label-text-alt">{ rfe.Username.Error() }</span>
+					</div>
+				}
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@icons.Lock()
+					<input type="password" class="grow" placeholder="Password" name={ PasswordField } required/>
+				</label>
+				if rfe.Password != nil {
+					<div class="label">
+						<span class="text-error label-text-alt">{ rfe.Password.Error() }</span>
+					</div>
+				}
+			</div>
+			<div class="form-control">
+				<label class="input input-bordered flex items-center gap-2">
+					@icons.Lock()
+					<input type="password" class="grow" placeholder="Repeat password" name={ PasswordRepeatField } required/>
+				</label>
+				if rfe.PasswordRepeat != nil {
+					<div class="label">
+						<span class="text-error label-text-alt">{ rfe.PasswordRepeat.Error() }</span>
+					</div>
+				}
+			</div>
+			<div class="form-control mt-6">
+				<button class="no-animation btn btn-primary">Register</button>
+			</div>
+			if err != nil {
+				<p class="text-error text-center">{ err.Error() }</p>
+			}
+		</form>
+	</div>
+}

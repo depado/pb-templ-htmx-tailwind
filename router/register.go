@@ -2,19 +2,29 @@ package router
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/models"
+
+	"github.com/Depado/pb-templ-htmx-todo/components"
+	"github.com/Depado/pb-templ-htmx-todo/components/auth"
+	"github.com/Depado/pb-templ-htmx-todo/htmx"
 )
 
-func (ar *AppRouter) Register(c echo.Context, email string, password string, passwordRepeat string) error {
+func (ar *AppRouter) Register(c echo.Context, email, username, password, passwordRepeat string) error {
 	user, _ := ar.App.Dao().FindAuthRecordByEmail("users", email)
 	if user != nil {
-		return fmt.Errorf("username already taken")
+		return fmt.Errorf("Email or username already taken")
+	}
+
+	user, _ = ar.App.Dao().FindAuthRecordByUsername("users", username)
+	if user != nil {
+		return fmt.Errorf("Email or username already taken")
 	}
 
 	if password != passwordRepeat {
-		return fmt.Errorf("passwords don't match")
+		return fmt.Errorf("Passwords don't match")
 	}
 
 	collection, err := ar.App.Dao().FindCollectionByNameOrId("users")
@@ -23,12 +33,37 @@ func (ar *AppRouter) Register(c echo.Context, email string, password string, pas
 	}
 
 	newUser := models.NewRecord(collection)
-	newUser.SetPassword(password)
-	newUser.SetEmail(email)
+	if err := newUser.SetPassword(password); err != nil {
+		ar.App.Logger().Error("setting password failed", "error", err)
+		return fmt.Errorf("Internal error")
+	}
+	if err := newUser.SetEmail(email); err != nil {
+		ar.App.Logger().Error("setting email failed", "error", err)
+		return fmt.Errorf("Internal error")
+	}
+	if err := newUser.SetUsername(username); err != nil {
+		ar.App.Logger().Error("setting username failed", "error", err)
+		return fmt.Errorf("Internal error")
+	}
 
 	if err = ar.App.Dao().SaveRecord(newUser); err != nil {
 		return err
 	}
 
 	return ar.setAuthToken(c, newUser)
+}
+
+func (ar *AppRouter) PostRegister(c echo.Context) error {
+	form := auth.GetRegisterFormValue(c)
+	rfe, err := form.Validate()
+
+	if err == nil {
+		err = ar.Register(c, form.Email, form.Username, form.Password, form.PasswordRepeat)
+	}
+
+	if err != nil {
+		return components.Render(http.StatusOK, c, auth.RegisterForm(form, rfe, err))
+	}
+
+	return htmx.Redirect(c, "/")
 }

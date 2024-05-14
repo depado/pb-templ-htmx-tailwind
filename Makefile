@@ -26,9 +26,7 @@ run: templ assets # Run the server
 
 .PHONY: dev
 dev: # Run in dev mode with file watching
-	wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: \
-		bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css :: \
-		go run main.go serve
+	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) run
 
 .PHONY: templdev
 templdev: # Run with templ's hot reload proxy

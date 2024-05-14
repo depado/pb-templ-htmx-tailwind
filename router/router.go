@@ -22,6 +22,7 @@ func NewAppRouter(e *core.ServeEvent) *AppRouter {
 }
 
 func (ar *AppRouter) SetupRoutes(live bool) error {
+	ar.Router.Use(middleware.Logger())
 	ar.Router.HTTPErrorHandler = htmx.WrapDefaultErrorHandler(ar.Router.HTTPErrorHandler)
 	ar.Router.GET("/static/*", assets.AssetsHandler(ar.App.Logger(), live), middleware.Gzip())
 
@@ -29,6 +30,7 @@ func (ar *AppRouter) SetupRoutes(live bool) error {
 	ar.Router.GET("/", GetHome)
 	ar.Router.GET("/login", ar.GetLogin)
 	ar.Router.POST("/login", ar.PostLogin)
+	ar.Router.POST("/register", ar.PostRegister)
 	ar.Router.POST("/logout", ar.PostLogout)
 	ar.Router.GET("/error", ar.GetError)
 

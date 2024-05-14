@@ -8,14 +8,18 @@ import (
 	"github.com/pocketbase/pocketbase/apis"
 
 	"github.com/Depado/pb-templ-htmx-todo/components"
+	"github.com/Depado/pb-templ-htmx-todo/components/auth"
 	"github.com/Depado/pb-templ-htmx-todo/components/shared"
 	"github.com/Depado/pb-templ-htmx-todo/htmx"
 )
 
-func (ar *AppRouter) Login(c echo.Context, email string, password string) error {
-	user, err := ar.App.Dao().FindAuthRecordByEmail("users", email)
+func (ar *AppRouter) Login(c echo.Context, identifier string, password string) error {
+	user, err := ar.App.Dao().FindAuthRecordByEmail("users", identifier)
 	if err != nil {
-		return fmt.Errorf("Invalid credentials.")
+		user, err = ar.App.Dao().FindAuthRecordByUsername("users", identifier)
+		if err != nil {
+			return fmt.Errorf("Invalid credentials.")
+		}
 	}
 
 	valid := user.ValidatePassword(password)
@@ -31,19 +35,19 @@ func (ar *AppRouter) GetLogin(c echo.Context) error {
 		return c.Redirect(302, "/")
 	}
 
-	return components.Render(http.StatusOK, c, components.Login(shared.Context{}, components.LoginFormValue{}, nil, htmx.IsHtmxRequest(c)))
+	return components.Render(http.StatusOK, c, auth.LoginPage(shared.Context{}, auth.LoginPageForms{}))
 }
 
 func (ar *AppRouter) PostLogin(c echo.Context) error {
-	form := components.GetLoginFormValue(c)
-	err := form.Validate()
+	form := auth.GetLoginFormValue(c)
+	lpe, err := form.Validate()
 
 	if err == nil {
-		err = ar.Login(c, form.Email, form.Password)
+		err = ar.Login(c, form.Identifier, form.Password)
 	}
 
 	if err != nil {
-		return components.Render(http.StatusOK, c, components.LoginForm(form, err))
+		return components.Render(http.StatusOK, c, auth.LoginForm(form, lpe, err))
 	}
 
 	return htmx.Redirect(c, "/")

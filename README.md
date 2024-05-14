@@ -9,11 +9,12 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
 - [x] Integrate `templ` with PocketBase
 - [x] Integrate `tailwind` & `daisyUI` with `templ`
 - [x] Integrate `htmx` with `templ` and PocketBase
-- [ ] Auth
-  - [x] Simple login with a Pocketbase user
-  - [ ] Registering a new user
-  - [ ] Display user, customize navbar when logged-in
-  - [ ] Logout
+- [x] Auth
+  - [x] Simple login with a Pocketbase user (email/username + password workflow)
+  - [x] Registering a new user
+  - [x] Display user, customize navbar when logged-in
+  - [x] Logout
+- [x] Proper form handling w/ per-field error
 
 ## Development
 
@@ -62,7 +63,7 @@ to slow things down. The restart usually takes 1-2 seconds.
   works perfectly and can even restart the backend but only when a templ file is
   modified. Attempts were made to combine `wgo` with the templ hot reload
   feature but that doesn't seem to work properly as it leaves some processes
-  running in the background (possibly due to the use of Make).
+  running in the background.
 
   An extra make target `make templdev` leverages this feature and can be used
   when mostly working on templ files.
