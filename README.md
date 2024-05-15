@@ -29,10 +29,13 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
 Once these two requirements are met:
 
 ```sh
-$ go install github.com/a-h/templ/cmd/templ@latest
-$ bun install
+$ make deps
 $ make
 ```
+
+### VSCODE debug
+
+The `.vscode` folder is configured to add a Run and a Debug launch commands.
 
 ### Build workflow
 
