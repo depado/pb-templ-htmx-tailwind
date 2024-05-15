@@ -7,10 +7,10 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 
-	"github.com/Depado/pb-templ-htmx-todo/components"
-	"github.com/Depado/pb-templ-htmx-todo/components/auth"
-	"github.com/Depado/pb-templ-htmx-todo/components/shared"
-	"github.com/Depado/pb-templ-htmx-todo/htmx"
+	"github.com/Depado/pb-templ-htmx-tailwind/components"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/auth"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/shared"
+	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
 )
 
 func (ar *AppRouter) Login(c echo.Context, identifier string, password string) error {

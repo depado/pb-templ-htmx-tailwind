@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
-	"github.com/Depado/pb-templ-htmx-todo/components"
-	"github.com/Depado/pb-templ-htmx-todo/components/shared"
+	"github.com/Depado/pb-templ-htmx-tailwind/components"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/shared"
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/models"

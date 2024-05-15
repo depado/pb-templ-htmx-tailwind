@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import "github.com/Depado/pb-templ-htmx-todo/components/shared"
+import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
 
 func HomePartial(c shared.Context) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {

@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import "github.com/Depado/pb-templ-htmx-todo/components/shared"
+import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
 
 type LoginPageForms struct {
 	LoginFormValue     LoginFormValue

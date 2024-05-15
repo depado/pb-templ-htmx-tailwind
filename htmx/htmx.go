@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Depado/pb-templ-htmx-todo/components"
-	"github.com/Depado/pb-templ-htmx-todo/components/shared"
+	"github.com/Depado/pb-templ-htmx-tailwind/components"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/shared"
 	"github.com/labstack/echo/v5"
 )
 

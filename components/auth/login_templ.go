@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"github.com/Depado/pb-templ-htmx-todo/components/icons"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/icons"
 )
 
 func LoginForm(lfv LoginFormValue, lfe LoginFormErrors, err error) templ.Component {

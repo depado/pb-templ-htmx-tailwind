@@ -7,9 +7,8 @@ help:
 .PHONY: deps
 deps: # Installs templ and and bun dependencies
 	go install github.com/a-h/templ/cmd/templ@latest
-
 	bun install
-	
+
 .PHONY: templ
 templ: # Generate templ files
 	templ generate
@@ -32,7 +31,7 @@ run: templ assets # Run the server
 
 .PHONY: dev
 dev: # Run in dev mode with file watching
-	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) run
+	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) --no-print-directory run
 
 .PHONY: templdev
 templdev: # Run with templ's hot reload proxy

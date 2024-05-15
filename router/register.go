@@ -7,9 +7,9 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/models"
 
-	"github.com/Depado/pb-templ-htmx-todo/components"
-	"github.com/Depado/pb-templ-htmx-todo/components/auth"
-	"github.com/Depado/pb-templ-htmx-todo/htmx"
+	"github.com/Depado/pb-templ-htmx-tailwind/components"
+	"github.com/Depado/pb-templ-htmx-tailwind/components/auth"
+	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
 )
 
 func (ar *AppRouter) Register(c echo.Context, email, username, password, passwordRepeat string) error {
