@@ -25,3 +25,10 @@ pb_data/
 pb-templ-htmx-todo
 ptht
 dockerdata
+
+## VSCODE
+__debug*
+
+## BUN
+*.lockb
+
