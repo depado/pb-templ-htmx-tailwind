@@ -33,7 +33,7 @@ $ make deps
 $ make
 ```
 
-### VSCODE debug
+### VSCode debug
 
 The `.vscode` folder is configured to add a Run and a Debug launch commands.
 
