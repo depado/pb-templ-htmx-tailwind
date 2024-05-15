@@ -29,13 +29,13 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
 Once these two requirements are met:
 
 ```sh
-$ make dep
+$ make deps
 $ make
 ```
 
 ### VSCODE debug
 
-The .vscode folder has a configured launch to Run or Debug the golang.
+The `.vscode` folder is configured to add a Run and a Debug launch commands.
 
 ### Build workflow
 
