@@ -36,7 +36,7 @@ func WrapDefaultErrorHandler(defaultErrorHandler echo.HTTPErrorHandler) echo.HTT
 				code = he.Code
 			}
 
-			components.Render(code, c, components.HTTPError(shared.Context{}, code, "", IsHtmxRequest(c)))
+			components.Render(code, c, components.HTTPError(shared.Context{}, code, "", IsHtmxRequest(c))) //nolint:errcheck
 		} else {
 			defaultErrorHandler(c, err)
 		}
