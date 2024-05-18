@@ -30,7 +30,7 @@ func Redirect(c echo.Context, path string) error {
 // including those to Pocketbase.
 func WrapDefaultErrorHandler(defaultErrorHandler echo.HTTPErrorHandler) echo.HTTPErrorHandler {
 	return func(c echo.Context, err error) {
-		if IsHtmxRequest(c) || !strings.HasPrefix(c.Path(), "/_/") {
+		if IsHtmxRequest(c) || (!strings.HasPrefix(c.Path(), "/_/") && !strings.HasPrefix(c.Path(), "/api/")) {
 			code := http.StatusInternalServerError
 			if he, ok := err.(*echo.HTTPError); ok {
 				code = he.Code

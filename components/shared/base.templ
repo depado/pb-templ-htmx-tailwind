@@ -1,10 +1,12 @@
 package shared
 
-import "github.com/pocketbase/pocketbase/models"
+import pbmodels "github.com/pocketbase/pocketbase/models"
+import "github.com/Depado/pb-templ-htmx-tailwind/models"
 
 // Context is the base context that needs to be injected in all pages
 type Context struct {
-	User *models.Record
+	User  *pbmodels.Record
+	Lists []*models.List
 }
 
 templ Header(title string) {

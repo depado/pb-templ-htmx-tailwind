@@ -9,7 +9,7 @@ templ LoginForm(lfv LoginFormValue, lfe LoginFormErrors, err error) {
 		<form class="card-body" method="POST" action="/login" hx-target="#login-form" hx-boost="true">
 			<div class="form-control">
 				<label class="input input-bordered flex items-center gap-2">
-					@icons.User()
+					@icons.User(false)
 					<input type="text" class="grow" placeholder="Username or email" name={ IdentifierField } value={ lfv.Identifier } required/>
 				</label>
 				if lfe.Identifier != nil {

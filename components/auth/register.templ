@@ -20,7 +20,7 @@ templ RegisterForm(rfv RegisterFormValue, rfe RegisterFormErrors, err error) {
 			</div>
 			<div class="form-control">
 				<label class="input input-bordered flex items-center gap-2">
-					@icons.User()
+					@icons.User(false)
 					<input type="text" class="grow" placeholder="Username" name={ UsernameField } value={ rfv.Username } required/>
 				</label>
 				if rfe.Username != nil {

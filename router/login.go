@@ -24,9 +24,11 @@ func (ar *AppRouter) Login(c echo.Context, identifier string, password string) e
 
 	valid := user.ValidatePassword(password)
 	if !valid {
+		ar.App.Logger().Error("wrong password", "identifier", identifier, "id", user.Id)
 		return fmt.Errorf("Invalid credentials.")
 	}
 
+	ar.App.Logger().Debug("user signed-in", "identifier", identifier, "id", user.Id)
 	return ar.setAuthToken(c, user)
 }
 

@@ -27,12 +27,15 @@ func (ar *AppRouter) SetupRoutes(live bool) error {
 	ar.Router.GET("/static/*", assets.AssetsHandler(ar.App.Logger(), live), middleware.Gzip())
 
 	ar.Router.Use(ar.LoadAuthContextFromCookie())
-	ar.Router.GET("/", GetHome)
+	ar.Router.GET("/", ar.GetHome)
 	ar.Router.GET("/login", ar.GetLogin)
 	ar.Router.POST("/login", ar.PostLogin)
 	ar.Router.POST("/register", ar.PostRegister)
 	ar.Router.POST("/logout", ar.PostLogout)
 	ar.Router.GET("/error", ar.GetError)
+
+	ar.Router.PATCH("/task/:id", ar.ToggleTask)
+	ar.Router.POST("/list/:id/task", ar.CreateTask)
 
 	return nil
 }

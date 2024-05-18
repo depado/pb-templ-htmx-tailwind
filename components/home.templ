@@ -1,19 +1,134 @@
 package components
 
+import "fmt"
 import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
+import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/Depado/pb-templ-htmx-tailwind/models"
 
-templ HomePartial(c shared.Context) {
-	<div class="h-full flex-auto hero bg-base-200">
-		<div class="hero-content text-center">
-			<div class="max-w-md prose">
-				<h1>Hey there</h1>
-				if c.User != nil {
-					<h2>{ c.User.Email() }</h2>
-				}
-				<p>This is the main content</p>
+templ Progress(perc, size float64) {
+	<svg id="rad" width={ fmt.Sprintf("%.fpx", size) } height={ fmt.Sprintf("%.fpx", size) } viewBox={ fmt.Sprintf("0 0 %.f %.f", size, size) } version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+		<circle
+			r={ fmt.Sprintf("%.2f", size/2-5) }
+			cx={ fmt.Sprintf("%.2f", size/2) }
+			cy={ fmt.Sprintf("%.2f", size/2) }
+			fill="transparent"
+			stroke="oklch(46.14% 0.0216 264.436 / 63.86%)"
+			stroke-width="5"
+		></circle>
+		<circle
+			r={ fmt.Sprintf("%.2f", size/2-5) }
+			cx={ fmt.Sprintf("%.2f", size/2) }
+			cy={ fmt.Sprintf("%.2f", size/2) }
+			fill="transparent"
+			stroke="oklch(0.648 0.15 160)"
+			stroke-width="5"
+			stroke-linecap="round"
+			stroke-dashoffset={ fmt.Sprintf("%.2fpx", 3.14*(size/2-5)*2*(float64((100-perc)/100))) }
+			stroke-dasharray={ fmt.Sprintf("%.2fpx", 2*3.14*(size/2-5)) }
+		></circle>
+	</svg>
+}
+
+templ ListContextMenu(l *models.List) {
+	<span class="dropdown dropdown-end ms-2">
+		<div tabindex="0" role="button" class="mb-1">
+			@icons.Dots(true)
+		</div>
+		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box">
+			<li>
+				<a>
+					@icons.Archive()
+					Archive
+				</a>
+			</li>
+			<li>
+				<a class="text-error">
+					@icons.Trash()
+					Delete
+				</a>
+			</li>
+		</ul>
+	</span>
+}
+
+templ Task(l *models.List, t *models.Task) {
+	<div class="form-control">
+		<label class="cursor-pointer label justify-start px-0 py-2">
+			<input
+				type="checkbox"
+				class="no-animation checkbox checkbox-success mr-5"
+				checked?={ t.Done }
+				autocomplete="off"
+				hx-patch={ fmt.Sprintf("/task/%s", t.Id) }
+				hx-target={ fmt.Sprintf("#list-%s", l.Id) }
+				hx-swap="outerHTML"
+			/>
+			<span class="label-text">{ t.Title }</span>
+		</label>
+	</div>
+}
+
+templ List(l *models.List) {
+	<div id={ fmt.Sprintf("list-%s", l.Id) } class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-5">
+		<div class="card card-compact h-full bg-base-100">
+			<div class="card-body flex flex-col justify-between">
+				<div>
+					<h2 class="card-title flex flex-row justify-between">
+						<span>{ l.Title }</span>
+						<span class="inline-flex">
+							if len(l.Tasks) > 0 {
+								@Progress(float64(l.Completed)/float64(len(l.Tasks))*100, 25)
+							} else {
+								@Progress(100, 25)
+							}
+							@ListContextMenu(l)
+						</span>
+					</h2>
+					<span class="text-xs">{ fmt.Sprintf("%d/%d Tasks completed", l.Completed, len(l.Tasks)) }</span>
+					<div class="divider my-0"></div>
+					for _, todo := range l.Tasks {
+						@Task(l, todo)
+					}
+				</div>
+				<div>
+					<div class="divider my-0"></div>
+					<div class="form-control">
+						<div class="flex gap-2">
+							<input
+								type="text"
+								name="title"
+								class="flex-1 input input-bordered input-sm"
+								placeholder="Add a task…"
+								hx-trigger="keyup[keyCode==13]"
+								hx-target={ fmt.Sprintf("#list-%s", l.Id) }
+								hx-swap="outerHTML"
+								hx-post={ fmt.Sprintf("/list/%s/task", l.Id) }
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+}
+
+templ HomePartial(c shared.Context) {
+	if c.User != nil {
+		<div class="flex flex-wrap h-full bg-base-300">
+			for _, list := range c.Lists {
+				@List(list)
+			}
+		</div>
+	} else {
+		<div class="h-full hero flex-auto bg-base-200">
+			<div class="hero-content text-center">
+				<div class="max-w-md prose">
+					<h1>Hey there</h1>
+					<p>This is the main content</p>
+				</div>
+			</div>
+		</div>
+	}
 }
 
 templ Home(c shared.Context) {

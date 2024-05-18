@@ -11,7 +11,7 @@ templ ThemeToggle() {
 }
 
 templ Footer() {
-	<footer class="footer items-center p-4 bg-base-100">
+	<footer class="footer items-center gap-2 p-4 bg-base-100">
 		<aside class="items-center grid-flow-col">
 			@icons.App()
 			<p>Copyleft © 2024 - Pretty cool footer huh?</p>
@@ -24,39 +24,73 @@ templ Footer() {
 	</footer>
 }
 
-templ Drawer() {
+templ Drawer(c Context) {
 	<div class="drawer-side">
 		<label for="drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-		<ul class="menu p-4 w-80 min-h-full bg-base-200">
-			<li>
-				<a
-					hx-get="/settings"
-					hx-trigger="click"
-					hx-target="body"
-					hx-replace-url="true"
-					hx-push-url="true"
-				>
-					@icons.Cog()
-					Settings
-				</a>
-			</li>
-			<li>
-				<a
-					hx-post="/logout"
-					hx-trigger="click"
-				>
-					@icons.Logout()
-					Logout
-				</a>
-			</li>
-		</ul>
+		<div class="min-h-full p-1 w-72 bg-base-200">
+			<ul class="menu">
+				if c.User != nil {
+					<li>
+						<a
+							hx-get="/settings"
+							hx-trigger="click"
+							hx-target="body"
+							hx-replace-url="true"
+							hx-push-url="true"
+						>
+							@icons.Cog()
+							Settings
+						</a>
+					</li>
+					<li>
+						<a
+							hx-post="/logout"
+							hx-trigger="click"
+						>
+							@icons.Logout()
+							Logout
+						</a>
+					</li>
+				} else {
+					<li>
+						<a
+							hx-get="/login"
+							hx-trigger="click"
+							hx-target="body"
+							hx-replace-url="true"
+							hx-push-url="true"
+						>
+							@icons.User(false)
+							Login
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
 	</div>
 }
 
 templ UserMenu(c Context) {
-	<div class="dropdown dropdown-end">
-		<div tabindex="0" role="button" class="no-animation btn btn-ghost">{ c.User.Email() }</div>
-		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+	<li class="dropdown dropdown-end mx-1">
+		<div tabindex="0" role="button" class="no-animation btn btn-ghost">
+			if c.User.Username() == "" {
+				{ c.User.Email() }
+			} else {
+				{ c.User.Username() }
+			}
+			@icons.ChevronDown()
+		</div>
+		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box">
+			<li>
+				<a class="flex" title="View profile">
+					@icons.User(true)
+					<div class="flex flex-col">
+						<h3 class="font-bold">{ c.User.Username() }</h3>
+						<span class="text-xs">{ c.User.Email() }</span>
+					</div>
+				</a>
+			</li>
+			<div class="divider my-0"></div>
 			<li>
 				<a
 					hx-get="/settings"
@@ -69,6 +103,7 @@ templ UserMenu(c Context) {
 					Settings
 				</a>
 			</li>
+			<div class="divider my-0"></div>
 			<li>
 				<a
 					hx-post="/logout"
@@ -79,13 +114,13 @@ templ UserMenu(c Context) {
 				</a>
 			</li>
 		</ul>
-	</div>
+	</li>
 }
 
 templ DrawerWrapper(c Context) {
 	<div class="drawer">
 		<input id="drawer" type="checkbox" class="drawer-toggle"/>
-		<div class="drawer-content h-screen flex flex-col">
+		<div class="drawer-content min-h-screen flex flex-col">
 			<!-- Navbar -->
 			<div class="w-full navbar bg-base-100">
 				<div class="flex-none lg:hidden">
@@ -93,7 +128,7 @@ templ DrawerWrapper(c Context) {
 						@icons.Drawer()
 					</label>
 				</div>
-				<div class="flex-1 px-2 mx-2">
+				<div class="flex-1 mx-1">
 					<a
 						class="no-animation btn btn-ghost"
 						hx-get="/"
@@ -132,6 +167,6 @@ templ DrawerWrapper(c Context) {
 			{ children... }
 			@Footer()
 		</div>
-		@Drawer()
+		@Drawer(c)
 	</div>
 }

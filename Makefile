@@ -33,6 +33,11 @@ run: templ assets # Run the server
 dev: # Run in dev mode with file watching
 	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) --no-print-directory run
 
+.PHONY: lint
+lint:
+	golangci-lint run ./...
+	deadcode -generated .
+
 .PHONY: templdev
 templdev: # Run with templ's hot reload proxy
 	templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"

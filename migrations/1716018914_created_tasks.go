@@ -12,17 +12,17 @@ import (
 func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
-			"id": "gmeqcex1322pazm",
-			"created": "2024-05-15 22:34:14.516Z",
-			"updated": "2024-05-15 22:34:14.516Z",
-			"name": "todos",
+			"id": "qkgo280tuodttcw",
+			"created": "2024-05-18 07:55:14.880Z",
+			"updated": "2024-05-18 07:55:14.880Z",
+			"name": "tasks",
 			"type": "base",
 			"system": false,
 			"schema": [
 				{
 					"system": false,
-					"id": "p1l3wygr",
-					"name": "name",
+					"id": "jeqagroo",
+					"name": "title",
 					"type": "text",
 					"required": false,
 					"presentable": false,
@@ -35,19 +35,21 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "jtn7ngqw",
+					"id": "d2zqt6vf",
 					"name": "description",
-					"type": "editor",
+					"type": "text",
 					"required": false,
 					"presentable": false,
 					"unique": false,
 					"options": {
-						"convertUrls": false
+						"min": null,
+						"max": null,
+						"pattern": ""
 					}
 				},
 				{
 					"system": false,
-					"id": "sz9zeaam",
+					"id": "s6jronri",
 					"name": "done",
 					"type": "bool",
 					"required": false,
@@ -57,7 +59,7 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "fvfullgq",
+					"id": "ypv3pi8u",
 					"name": "deadline",
 					"type": "date",
 					"required": false,
@@ -70,30 +72,14 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "nytkghsw",
+					"id": "kksswfkk",
 					"name": "list",
 					"type": "relation",
-					"required": false,
+					"required": true,
 					"presentable": false,
 					"unique": false,
 					"options": {
-						"collectionId": "1tpgrbimd8f6b99",
-						"cascadeDelete": false,
-						"minSelect": null,
-						"maxSelect": 1,
-						"displayFields": null
-					}
-				},
-				{
-					"system": false,
-					"id": "c41cqivt",
-					"name": "owner",
-					"type": "relation",
-					"required": false,
-					"presentable": false,
-					"unique": false,
-					"options": {
-						"collectionId": "_pb_users_auth_",
+						"collectionId": "h8yrvo8gxpwkizy",
 						"cascadeDelete": false,
 						"minSelect": null,
 						"maxSelect": 1,
@@ -119,7 +105,7 @@ func init() {
 	}, func(db dbx.Builder) error {
 		dao := daos.New(db);
 
-		collection, err := dao.FindCollectionByNameOrId("gmeqcex1322pazm")
+		collection, err := dao.FindCollectionByNameOrId("qkgo280tuodttcw")
 		if err != nil {
 			return err
 		}
