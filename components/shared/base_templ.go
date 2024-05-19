@@ -15,8 +15,13 @@ import "github.com/Depado/pb-templ-htmx-tailwind/models"
 
 // Context is the base context that needs to be injected in all pages
 type Context struct {
-	User  *pbmodels.Record
-	Lists []*models.List
+	User     *pbmodels.Record
+	Lists    []*models.List
+	Settings Settings
+}
+
+type Settings struct {
+	ShowArchived bool
 }
 
 func Header(title string) templ.Component {
@@ -39,7 +44,7 @@ func Header(title string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/shared/base.templ`, Line: 15, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/shared/base.templ`, Line: 20, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

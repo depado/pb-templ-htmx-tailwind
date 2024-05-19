@@ -1,0 +1,19 @@
+package shared
+
+import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+
+templ Footer() {
+	<footer class="footer items-center gap-2 p-4 bg-base-100">
+		<aside class="items-center grid-flow-col">
+			@icons.App()
+			<p>Copyleft © 2024 - Pretty cool footer huh?</p>
+		</aside>
+		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+			<a href="https://github.com/Depado/pb-templ-htmx-tailwind" target="_blank">
+				@icons.GitHub()
+			</a>
+		</nav>
+	</footer>
+}
+
+

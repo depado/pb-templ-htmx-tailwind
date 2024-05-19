@@ -36,9 +36,16 @@ func WrapDefaultErrorHandler(defaultErrorHandler echo.HTTPErrorHandler) echo.HTT
 				code = he.Code
 			}
 
-			components.Render(code, c, components.HTTPError(shared.Context{}, code, "", IsHtmxRequest(c))) //nolint:errcheck
+			components.Render(c, code, components.HTTPError(shared.Context{}, code, "", IsHtmxRequest(c))) //nolint:errcheck
 		} else {
 			defaultErrorHandler(c, err)
 		}
 	}
+}
+
+// Error will retarget HTMX with the appropriate header so it uses the
+// invisible placeholder already present in the page.
+func Error(c echo.Context, message string) error {
+	c.Response().Header().Set("HX-Retarget", "#"+shared.ErrorToastId)
+	return components.Render(c, http.StatusOK, shared.ErrorToast(message))
 }

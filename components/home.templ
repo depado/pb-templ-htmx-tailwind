@@ -6,7 +6,7 @@ import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
 import "github.com/Depado/pb-templ-htmx-tailwind/models"
 
 templ Progress(perc, size float64) {
-	<svg id="rad" width={ fmt.Sprintf("%.fpx", size) } height={ fmt.Sprintf("%.fpx", size) } viewBox={ fmt.Sprintf("0 0 %.f %.f", size, size) } version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+	<svg class="me-1" id="rad" width={ fmt.Sprintf("%.fpx", size) } height={ fmt.Sprintf("%.fpx", size) } viewBox={ fmt.Sprintf("0 0 %.f %.f", size, size) } version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
 		<circle
 			r={ fmt.Sprintf("%.2f", size/2-5) }
 			cx={ fmt.Sprintf("%.2f", size/2) }
@@ -30,8 +30,8 @@ templ Progress(perc, size float64) {
 }
 
 templ ListContextMenu(l *models.List) {
-	<span class="dropdown dropdown-end ms-2">
-		<div tabindex="0" role="button" class="mb-1">
+	<span class="dropdown dropdown-end">
+		<div tabindex="0" role="button">
 			@icons.Dots(true)
 		</div>
 		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box">
@@ -52,39 +52,66 @@ templ ListContextMenu(l *models.List) {
 }
 
 templ Task(l *models.List, t *models.Task) {
-	<div class="form-control">
-		<label class="cursor-pointer label justify-start px-0 py-2">
-			<input
-				type="checkbox"
-				class="no-animation checkbox checkbox-success mr-5"
-				checked?={ t.Done }
-				autocomplete="off"
-				hx-patch={ fmt.Sprintf("/task/%s", t.Id) }
-				hx-target={ fmt.Sprintf("#list-%s", l.Id) }
-				hx-swap="outerHTML"
-			/>
-			<span class="label-text">{ t.Title }</span>
-		</label>
+	<div class={ "form-control flex flex-row justify-start pb-2", templ.KV("items-center", t.Description != "") }>
+		<input
+			type="checkbox"
+			class="no-animation checkbox checkbox-success me-3"
+			checked?={ t.Done }
+			autocomplete="off"
+			hx-patch={ fmt.Sprintf("/task/%s", t.Id) }
+			hx-target={ fmt.Sprintf("#list-%s", l.Id) }
+			hx-swap="outerHTML"
+		/>
+		<div class="flex flex-col">
+			<span><b>{ t.Title }</b></span>
+			<span class="text-xs">{ t.Description }</span>
+		</div>
 	</div>
+}
+
+templ ListTitle(l *models.List) {
+	<h2 class="card-title flex flex-row justify-between">
+		<span>{ l.Title }</span>
+		<span class="inline-flex items-center">
+			if len(l.Tasks) > 0 {
+				<span class="me-2">
+					{ fmt.Sprintf("%.f%%", float64(l.Completed)/float64(len(l.Tasks))*100) }
+				</span>
+				@Progress(float64(l.Completed)/float64(len(l.Tasks))*100, 25)
+			} else {
+				@Progress(100, 25)
+			}
+			@ListContextMenu(l)
+		</span>
+	</h2>
+}
+
+templ ListMetadata(l *models.List) {
+	if l.Description != "" {
+		<span class="flex items-center">
+			@icons.Notepad(24)
+			<span class="ms-2">{ l.Description }</span>
+		</span>
+	}
+	<span class="flex items-center">
+		@icons.Task(24)
+		<span class="ms-2">{ fmt.Sprintf("%d/%d Tasks completed", l.Completed, len(l.Tasks)) }</span>
+	</span>
+	if !l.Deadline.IsZero() {
+		<span class="flex items-center">
+			@icons.Calendar(24)
+			<span class="ms-2">{ l.Deadline.Time().Format("2006-01-02 15:04") }</span>
+		</span>
+	}
 }
 
 templ List(l *models.List) {
 	<div id={ fmt.Sprintf("list-%s", l.Id) } class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-5">
 		<div class="card card-compact h-full bg-base-100">
 			<div class="card-body flex flex-col justify-between">
-				<div>
-					<h2 class="card-title flex flex-row justify-between">
-						<span>{ l.Title }</span>
-						<span class="inline-flex">
-							if len(l.Tasks) > 0 {
-								@Progress(float64(l.Completed)/float64(len(l.Tasks))*100, 25)
-							} else {
-								@Progress(100, 25)
-							}
-							@ListContextMenu(l)
-						</span>
-					</h2>
-					<span class="text-xs">{ fmt.Sprintf("%d/%d Tasks completed", l.Completed, len(l.Tasks)) }</span>
+				<div class="flex flex-col gap-2">
+					@ListTitle(l)
+					@ListMetadata(l)
 					<div class="divider my-0"></div>
 					for _, todo := range l.Tasks {
 						@Task(l, todo)
@@ -112,7 +139,7 @@ templ List(l *models.List) {
 	</div>
 }
 
-templ HomePartial(c shared.Context) {
+templ HomePartial(c shared.Context, archives bool) {
 	if c.User != nil {
 		<div class="flex flex-wrap h-full bg-base-300">
 			for _, list := range c.Lists {
@@ -131,8 +158,8 @@ templ HomePartial(c shared.Context) {
 	}
 }
 
-templ Home(c shared.Context) {
+templ Home(c shared.Context, archives bool) {
 	@shared.Base(c, "Home") {
-		@HomePartial(c)
+		@HomePartial(c, archives)
 	}
 }

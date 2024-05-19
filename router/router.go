@@ -37,5 +37,10 @@ func (ar *AppRouter) SetupRoutes(live bool) error {
 	ar.Router.PATCH("/task/:id", ar.ToggleTask)
 	ar.Router.POST("/list/:id/task", ar.CreateTask)
 
+	// unimplemented
+	// ar.Router.POST("/list", ar.ListCreate)
+	// ar.Router.PATCH("/list/:id/archive", ar.ListArchive)
+	// ar.Router.DELETE("/list/:id", ar.ListDelete)
+
 	return nil
 }

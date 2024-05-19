@@ -21,20 +21,23 @@ func (ar *AppRouter) ToggleTask(c echo.Context) error {
 	task, err := models.GetTaskById(ar.App.Dao(), id)
 	if err != nil {
 		ar.App.Logger().Debug("get task by id error", "error", err, "task", id)
+		return htmx.Error(c, "Unable to find this task")
 	}
 
 	task.Done = !task.Done
 
 	if err := task.Save(ar.App.Dao()); err != nil {
 		ar.App.Logger().Error("saving task", "error", err, "task", id)
+		return htmx.Error(c, "Unable to save this task")
 	}
 
 	list, err := models.GetListById(ar.App.Dao(), task.ListId, true)
 	if err != nil {
 		ar.App.Logger().Error("get list by id error", "error", err, "list", task.ListId)
+		return htmx.Error(c, "Unable to find this list")
 	}
 
-	return components.Render(http.StatusOK, c, components.List(list))
+	return components.Render(c, http.StatusOK, components.List(list))
 }
 
 func (ar *AppRouter) CreateTask(c echo.Context) error {
@@ -50,12 +53,14 @@ func (ar *AppRouter) CreateTask(c echo.Context) error {
 
 	if err := t.Save(ar.App.Dao()); err != nil {
 		ar.App.Logger().Error("save new task", "error", err, "list", t.ListId)
+		return htmx.Error(c, "Unable to save new task")
 	}
 
 	list, err := models.GetListById(ar.App.Dao(), t.ListId, true)
 	if err != nil {
 		ar.App.Logger().Error("get list by id error", "error", err, "list", t.ListId)
+		return htmx.Error(c, "Unable to find this list")
 	}
 
-	return components.Render(http.StatusOK, c, components.List(list))
+	return components.Render(c, http.StatusOK, components.List(list))
 }

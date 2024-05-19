@@ -10,20 +10,6 @@ templ ThemeToggle() {
 	</label>
 }
 
-templ Footer() {
-	<footer class="footer items-center gap-2 p-4 bg-base-100">
-		<aside class="items-center grid-flow-col">
-			@icons.App()
-			<p>Copyleft © 2024 - Pretty cool footer huh?</p>
-		</aside>
-		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-			<a href="https://github.com/Depado/pb-templ-htmx-tailwind" target="_blank">
-				@icons.GitHub()
-			</a>
-		</nav>
-	</footer>
-}
-
 templ Drawer(c Context) {
 	<div class="drawer-side">
 		<label for="drawer" aria-label="close sidebar" class="drawer-overlay"></label>
@@ -165,6 +151,7 @@ templ DrawerWrapper(c Context) {
 				</div>
 			</div>
 			{ children... }
+			@ErrorToastPlaceHolder()
 			@Footer()
 		</div>
 		@Drawer(c)

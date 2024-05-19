@@ -1,0 +1,23 @@
+package shared
+
+import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+
+const ErrorToastId = "error-toast"
+
+templ ErrorToast(message string) {
+	<div id={ ErrorToastId } class="toast toast-top toast-center">
+		<div role="alert" class="alert alert-error">
+			@icons.ErrorMessage()
+			<span>{ message }</span>
+			<div>
+				<button class="btn btn-sm btn-ghost" hx-on:click="htmx.toggleClass('#error-toast', 'invisible')">
+					@icons.X()
+				</button>
+			</div>
+		</div>
+	</div>
+}
+
+templ ErrorToastPlaceHolder() {
+	<div id={ ErrorToastId } class="toast toast-top toast-center invisible"></div>
+}

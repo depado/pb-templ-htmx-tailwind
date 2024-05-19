@@ -6,7 +6,7 @@ import (
 )
 
 // Render renders a templ component with the appropriate headers.
-func Render(code int, ctx echo.Context, c templ.Component) error {
+func Render(ctx echo.Context, code int, c templ.Component) error {
 	ctx.Response().Writer.WriteHeader(code)
 	ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
 	return c.Render(ctx.Request().Context(), ctx.Response().Writer)

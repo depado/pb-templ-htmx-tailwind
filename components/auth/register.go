@@ -36,6 +36,10 @@ func (rfv RegisterFormValue) Validate() (RegisterFormErrors, error) {
 		PasswordRepeat: validation.Validate(rfv.PasswordRepeat, validation.Required.Error("Required")),
 	}
 
+	if rfv.Password != "" && rfv.PasswordRepeat != "" && rfv.Password != rfv.PasswordRepeat {
+		rfe.PasswordRepeat = fmt.Errorf("Passwords don't match")
+	}
+
 	if rfe.Email != nil || rfe.Username != nil || rfe.Password != nil || rfe.PasswordRepeat != nil {
 		return rfe, fmt.Errorf("Validation error")
 	}

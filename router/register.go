@@ -12,19 +12,16 @@ import (
 	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
 )
 
+// Register handles the registration of new users.
 func (ar *AppRouter) Register(c echo.Context, email, username, password, passwordRepeat string) error {
 	user, _ := ar.App.Dao().FindAuthRecordByEmail("users", email)
 	if user != nil {
-		return fmt.Errorf("Email or username already taken")
+		return fmt.Errorf("Email or username already taken.")
 	}
 
 	user, _ = ar.App.Dao().FindAuthRecordByUsername("users", username)
 	if user != nil {
-		return fmt.Errorf("Email or username already taken")
-	}
-
-	if password != passwordRepeat {
-		return fmt.Errorf("Passwords don't match")
+		return fmt.Errorf("Email or username already taken.")
 	}
 
 	collection, err := ar.App.Dao().FindCollectionByNameOrId("users")
@@ -62,7 +59,7 @@ func (ar *AppRouter) PostRegister(c echo.Context) error {
 	}
 
 	if err != nil {
-		return components.Render(http.StatusOK, c, auth.RegisterForm(form, rfe, err))
+		return components.Render(c, http.StatusOK, auth.RegisterForm(form, rfe, err))
 	}
 
 	return htmx.Redirect(c, "/")
