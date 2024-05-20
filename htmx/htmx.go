@@ -46,6 +46,13 @@ func WrapDefaultErrorHandler(defaultErrorHandler echo.HTTPErrorHandler) echo.HTT
 // Error will retarget HTMX with the appropriate header so it uses the
 // invisible placeholder already present in the page.
 func Error(c echo.Context, message string) error {
-	c.Response().Header().Set("HX-Retarget", "#"+shared.ErrorToastId)
+	c.Response().Header().Set("HX-Retarget", "#"+shared.ToastId)
 	return components.Render(c, http.StatusOK, shared.ErrorToast(message))
+}
+
+// Info will retarget HTMX with the appropriate header so it uses the
+// invisible placeholder already present in the page.
+func Info(c echo.Context, message string) error {
+	c.Response().Header().Set("HX-Retarget", "#"+shared.ToastId)
+	return components.Render(c, http.StatusOK, shared.InfoToast(message))
 }

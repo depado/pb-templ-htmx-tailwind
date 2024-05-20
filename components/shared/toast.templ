@@ -1,0 +1,38 @@
+package shared
+
+import "fmt"
+import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+
+const ToastId = "toast"
+
+templ ErrorToast(message string) {
+	<div id={ ToastId } class="toast toast-top toast-center">
+		<div role="alert" class="alert alert-error">
+			@icons.ErrorMessage()
+			<span>{ message }</span>
+			<div>
+				<button class="btn btn-sm btn-ghost" _={ fmt.Sprintf("on click add .invisible to #%s", ToastId) }>
+					@icons.X()
+				</button>
+			</div>
+		</div>
+	</div>
+}
+
+templ InfoToast(message string) {
+	<div id={ ToastId } class="toast toast-top toast-center">
+		<div role="alert" class="alert alert-success">
+			@icons.ErrorMessage()
+			<span>{ message }</span>
+			<div>
+				<button class="btn btn-sm btn-ghost" _={ fmt.Sprintf("on click add .invisible to #%s", ToastId) }>
+					@icons.X()
+				</button>
+			</div>
+		</div>
+	</div>
+}
+
+templ ToastPlaceHolder() {
+	<div id={ ToastId } class="toast toast-top toast-center invisible"></div>
+}

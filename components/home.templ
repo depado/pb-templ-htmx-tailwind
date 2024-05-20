@@ -36,9 +36,18 @@ templ ListContextMenu(l *models.List) {
 		</div>
 		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box">
 			<li>
-				<a>
-					@icons.Archive()
-					Archive
+				<a
+					hx-patch={ fmt.Sprintf("/list/%s/archive", l.Id) }
+					hx-target={ fmt.Sprintf("#list-%s", l.Id) }
+					hx-swap="outerHTML"
+				>
+					if l.Archived {
+						@icons.ArchiveOut()
+						Unarchive
+					} else {
+						@icons.ArchiveIn()
+						Archive
+					}
 				</a>
 			</li>
 			<li>
@@ -71,7 +80,14 @@ templ Task(l *models.List, t *models.Task) {
 
 templ ListTitle(l *models.List) {
 	<h2 class="card-title flex flex-row justify-between">
-		<span>{ l.Title }</span>
+		<span class="inline-flex items-center">
+			if l.Archived {
+				<span class="me-2">
+					@icons.Box()
+				</span>
+			}
+			{ l.Title }
+		</span>
 		<span class="inline-flex items-center">
 			if len(l.Tasks) > 0 {
 				<span class="me-2">
@@ -89,20 +105,40 @@ templ ListTitle(l *models.List) {
 templ ListMetadata(l *models.List) {
 	if l.Description != "" {
 		<span class="flex items-center">
-			@icons.Notepad(24)
+			@icons.Notepad(20)
 			<span class="ms-2">{ l.Description }</span>
 		</span>
 	}
 	<span class="flex items-center">
-		@icons.Task(24)
+		@icons.Task(20)
 		<span class="ms-2">{ fmt.Sprintf("%d/%d Tasks completed", l.Completed, len(l.Tasks)) }</span>
 	</span>
 	if !l.Deadline.IsZero() {
 		<span class="flex items-center">
-			@icons.Calendar(24)
+			@icons.Calendar(20)
 			<span class="ms-2">{ l.Deadline.Time().Format("2006-01-02 15:04") }</span>
 		</span>
 	}
+}
+
+templ ListAddForm(l *models.List) {
+	<div>
+		<div class="divider my-0"></div>
+		<div class="form-control">
+			<div class="flex gap-2">
+				<input
+					type="text"
+					name="title"
+					class="flex-1 input input-bordered input-sm"
+					placeholder="Add a task…"
+					hx-trigger="keyup[keyCode==13]"
+					hx-target={ fmt.Sprintf("#list-%s", l.Id) }
+					hx-swap="outerHTML"
+					hx-post={ fmt.Sprintf("/list/%s/task", l.Id) }
+				/>
+			</div>
+		</div>
+	</div>
 }
 
 templ List(l *models.List) {
@@ -117,23 +153,24 @@ templ List(l *models.List) {
 						@Task(l, todo)
 					}
 				</div>
-				<div>
-					<div class="divider my-0"></div>
-					<div class="form-control">
-						<div class="flex gap-2">
-							<input
-								type="text"
-								name="title"
-								class="flex-1 input input-bordered input-sm"
-								placeholder="Add a task…"
-								hx-trigger="keyup[keyCode==13]"
-								hx-target={ fmt.Sprintf("#list-%s", l.Id) }
-								hx-swap="outerHTML"
-								hx-post={ fmt.Sprintf("/list/%s/task", l.Id) }
-							/>
-						</div>
-					</div>
-				</div>
+				if !l.Archived {
+					@ListAddForm(l)
+				}
+			</div>
+		</div>
+	</div>
+}
+
+templ ListWithToast(l *models.List, message string) {
+	@List(l)
+	<div id={ shared.ToastId } hx-swap-oob="true" class="toast toast-top toast-center">
+		<div role="alert" class="alert alert-success">
+			@icons.ErrorMessage()
+			<span>{ message }</span>
+			<div>
+				<button class="btn btn-sm btn-ghost" _={ fmt.Sprintf("on click add .invisible to #%s", shared.ToastId) }>
+					@icons.X()
+				</button>
 			</div>
 		</div>
 	</div>
