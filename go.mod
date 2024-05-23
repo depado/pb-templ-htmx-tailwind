@@ -3,7 +3,7 @@ module github.com/Depado/pb-templ-htmx-tailwind
 go 1.22.2
 
 require (
-	github.com/a-h/templ v0.2.680
+	github.com/a-h/templ v0.2.697
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
 	github.com/pocketbase/dbx v1.10.1
