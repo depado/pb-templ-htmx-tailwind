@@ -20,13 +20,19 @@
 # Go workspace file
 go.work
 
+## VSCode
+__debug*
+
+# Node/Bun
 node_modules/
+
+# Pocketbase
 pb_data/
-pb-templ-htmx-todo
+
+# Templ
+*_templ.txt
+
 ptht
 dockerdata
-
-## VSCODE
-__debug*
 
 

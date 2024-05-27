@@ -1,8 +1,8 @@
 # pb-templ-htmx-tailwind
 
-POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
-[HTMX](https://htmx.org/) and [Tailwind](https://tailwindcss.com/) +
-[daisyUI](https://daisyui.com/)
+POC with [PocketBase](https://pocketbase.io/) + [Templ](https://templ.guide/),
+[HTMX](https://htmx.org/) + [hyperscript](https://hyperscript.org/)
+and [Tailwind](https://tailwindcss.com/) + [daisyUI](https://daisyui.com/)
 
 ## Roadmap
 
@@ -14,7 +14,19 @@ POC with [PocketBase](https://pocketbase.io/), [Templ](https://templ.guide/),
   - [x] Registering a new user
   - [x] Display user, customize navbar when logged-in
   - [x] Logout
+  - [ ] Handle OAuth2
 - [x] Proper form handling w/ per-field error
+- [ ] Error handling
+  - [x] Display error when endpoint fails
+  - [ ] Consistency
+- [ ] Lists
+  - [ ] CRUD operations
+  - [x] Display user's lists
+  - [ ] Archive
+    - [x] Archive a list
+    - [x] Unarchive
+    - [ ] Toggle to only display not archived lists
+
 
 ## Development
 
@@ -41,38 +53,30 @@ The `.vscode` folder is configured to add a Run and a Debug launch commands.
 
 - Generate templ Go files
 - Generate minified CSS with tailwind & daisyUI based on templ files
-- Embed assets in Go binary (CSS, favicon, htmx, etc)
+- Embed assets in Go binary (CSS, favicon, htmx, hyperscript, etc)
 
-### Dev mode
+### Live mode
 
 ```sh
 $ go install github.com/bokwoon95/wgo@latest
-$ make dev
+$ make live
 ```
 
-When using `make dev`, every change to a `.go` or `.templ` file will regenerate
-templ go files and the minified CSS file before restarting the server. It skips
-the embedding part of the build as there's no point in doing so (when running
-with `go run`, the files are served from the filesystem directly) and it tends
-to slow things down. The restart usually takes 1-2 seconds.
+Live mode profits from `Make`'s multi-process abilities by running three
+commands in parallel:
+- `bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css --watch`
+- `wgo -file .go -xfile=_templ.go go run main.go serve :: wgo -file .css templ generate --notify-proxy`
+- `templ generate --watch --proxy="http://127.0.0.1:8090" --open-browser=false`
 
-<details>
-  <summary>Improvements</summary>
+This will start templ's hot reload server that allows to automatically refresh
+the page whenever a template changes without restarting the server. Modifying
+the templates also changes the CSS file and triggers a page reload by sending
+a payload to templ's hot reload server. Whenever a go file that is not a templ
+generated file is changed, the backend restarts too.
 
-  #### Hot reload with templ
-
-  templ has a built-in
-  [hot reload](https://templ.guide/commands-and-tools/hot-reload/) feature that
-  works perfectly and can even restart the backend but only when a templ file is
-  modified. Attempts were made to combine `wgo` with the templ hot reload
-  feature but that doesn't seem to work properly as it leaves some processes
-  running in the background.
-
-  An extra make target `make templdev` leverages this feature and can be used
-  when mostly working on templ files.
-
-</details>
-
+Live mode also disables browser caching by setting the `Cache-Control` header to
+`"no-store"` for assets. This ensures the main CSS file is not cached when templ
+hot reloads the page.
 
 ### Docker
 

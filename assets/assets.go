@@ -13,9 +13,19 @@ import (
 //go:embed all:dist
 var assets embed.FS
 
+func disableCacheInLiveMode(live bool, next http.Handler) http.Handler {
+	if !live {
+		return next
+	}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		next.ServeHTTP(w, r)
+	})
+}
+
 func AssetsHandler(logger *slog.Logger, live bool) echo.HandlerFunc {
 	assetHandler := http.FileServer(GetFileSystem(logger, live))
-	return echo.WrapHandler(http.StripPrefix("/static/", assetHandler))
+	return echo.WrapHandler(disableCacheInLiveMode(live, http.StripPrefix("/static", assetHandler)))
 }
 
 func GetFileSystem(logger *slog.Logger, live bool) http.FileSystem {

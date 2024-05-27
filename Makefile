@@ -38,15 +38,23 @@ lint:
 	golangci-lint run ./...
 	deadcode -generated .
 
-.PHONY: templdev
-templdev: # Run with templ's hot reload proxy
-	templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"
+# =============
+# = Live Mode =
+# =============
 
-.PHONY: .templrun
-.templrun: assets # Not invokable because there's no point in running this without templ watch
-	go run main.go serve --http=127.0.0.1:8090
+.PHONY: live/assets
+live/assets:
+	bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css --watch
 
-# .PHONY: templdevwgo
-# templdevwgo:
-# 	wgo -exit -file=.go-xfile=_templ.go templ generate --watch --proxy="http://127.0.0.1:8090" --cmd="$(MAKE) --no-print-directory templrun"
+.PHONY: live/wgo
+live/wgo:
+	wgo -file .go -xfile=_templ.go go run main.go serve :: \
+	wgo -file .css templ generate --notify-proxy
 
+.PHONY: live/proxy
+live/proxy:
+	templ generate --watch --proxy="http://127.0.0.1:8090" --open-browser=false
+
+.PHONY: live
+live:
+	$(MAKE) --no-print-directory -j3 live/assets live/proxy live/wgo
