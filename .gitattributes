@@ -1,0 +1,3 @@
+*_templ.go linguist-generated
+assets/dist/styles.min.css linguist-generated
+assets/dist/*.js linguist-vendored

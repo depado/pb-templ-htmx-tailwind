@@ -29,10 +29,6 @@ build: embed # Generate, embed and build with proper flags
 run: templ assets # Run the server
 	go run main.go serve
 
-.PHONY: dev
-dev: # Run in dev mode with file watching
-	wgo -file=.go -file=.templ -xfile=_templ.go $(MAKE) --no-print-directory run
-
 .PHONY: lint
 lint:
 	golangci-lint run ./...
