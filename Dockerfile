@@ -1,5 +1,5 @@
 # Bun step, simply to copy bun binary
-FROM oven/bun:1.1.17-debian as bun
+FROM oven/bun:1.1.18-debian as bun
 
 # Builder step
 FROM golang:1.22-bookworm as builder
