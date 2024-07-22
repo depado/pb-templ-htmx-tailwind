@@ -5,7 +5,7 @@ go 1.22.2
 require (
 	github.com/a-h/templ v0.2.747
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
-	github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
+	github.com/labstack/echo/v5 f13e2640f0ea
 	github.com/pocketbase/dbx v1.10.1
 	github.com/pocketbase/pocketbase v0.22.17
 	github.com/spf13/cast v1.6.0
