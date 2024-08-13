@@ -2,7 +2,7 @@
 FROM oven/bun:1.1.22-debian as bun
 
 # Builder step
-FROM golang:1.22-bookworm as builder
+FROM golang:1.23-bookworm as builder
 
 # Setup bun
 COPY --chown=root:root --from=bun /usr/local/bin/bun /root/.bun/bin/
