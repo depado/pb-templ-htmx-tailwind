@@ -8,7 +8,7 @@ package auth
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
+import "github.com/depado/pb-templ-htmx-tailwind/components/shared"
 
 type LoginPageForms struct {
 	LoginFormValue     LoginFormValue

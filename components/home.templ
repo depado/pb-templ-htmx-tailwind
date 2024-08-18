@@ -1,9 +1,9 @@
 package components
 
 import "fmt"
-import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
-import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
-import "github.com/Depado/pb-templ-htmx-tailwind/models"
+import "github.com/depado/pb-templ-htmx-tailwind/components/shared"
+import "github.com/depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/depado/pb-templ-htmx-tailwind/models"
 
 templ Progress(perc, size float64) {
 	<svg class="me-1" id="rad" width={ fmt.Sprintf("%.fpx", size) } height={ fmt.Sprintf("%.fpx", size) } viewBox={ fmt.Sprintf("0 0 %.f %.f", size, size) } version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">

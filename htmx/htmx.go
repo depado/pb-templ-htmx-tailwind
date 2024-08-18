@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Depado/pb-templ-htmx-tailwind/components"
-	"github.com/Depado/pb-templ-htmx-tailwind/components/shared"
 	"github.com/labstack/echo/v5"
+
+	"github.com/depado/pb-templ-htmx-tailwind/components"
+	"github.com/depado/pb-templ-htmx-tailwind/components/shared"
 )
 
 // IsHtmxRequest checks if the received request has the HX-Request header that

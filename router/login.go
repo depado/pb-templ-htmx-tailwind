@@ -7,10 +7,10 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 
-	"github.com/Depado/pb-templ-htmx-tailwind/components"
-	"github.com/Depado/pb-templ-htmx-tailwind/components/auth"
-	"github.com/Depado/pb-templ-htmx-tailwind/components/shared"
-	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
+	"github.com/depado/pb-templ-htmx-tailwind/components"
+	"github.com/depado/pb-templ-htmx-tailwind/components/auth"
+	"github.com/depado/pb-templ-htmx-tailwind/components/shared"
+	"github.com/depado/pb-templ-htmx-tailwind/htmx"
 )
 
 // Login handles the login logic.

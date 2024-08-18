@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import "fmt"
-import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/depado/pb-templ-htmx-tailwind/components/icons"
 
 const ToastId = "toast"
 

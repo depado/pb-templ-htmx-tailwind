@@ -6,9 +6,9 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 
-	"github.com/Depado/pb-templ-htmx-tailwind/components"
-	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
-	"github.com/Depado/pb-templ-htmx-tailwind/models"
+	"github.com/depado/pb-templ-htmx-tailwind/components"
+	"github.com/depado/pb-templ-htmx-tailwind/htmx"
+	"github.com/depado/pb-templ-htmx-tailwind/models"
 )
 
 func (ar *AppRouter) ToggleTask(c echo.Context) error {

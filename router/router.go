@@ -5,8 +5,8 @@ import (
 	"github.com/labstack/echo/v5/middleware"
 	"github.com/pocketbase/pocketbase/core"
 
-	"github.com/Depado/pb-templ-htmx-tailwind/assets"
-	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
+	"github.com/depado/pb-templ-htmx-tailwind/assets"
+	"github.com/depado/pb-templ-htmx-tailwind/htmx"
 )
 
 type AppRouter struct {

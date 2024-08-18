@@ -9,9 +9,9 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import "fmt"
-import "github.com/Depado/pb-templ-htmx-tailwind/components/shared"
-import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
-import "github.com/Depado/pb-templ-htmx-tailwind/models"
+import "github.com/depado/pb-templ-htmx-tailwind/components/shared"
+import "github.com/depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/depado/pb-templ-htmx-tailwind/models"
 
 func Progress(perc, size float64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {

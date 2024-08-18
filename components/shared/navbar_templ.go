@@ -8,7 +8,7 @@ package shared
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/depado/pb-templ-htmx-tailwind/components/icons"
 
 func ThemeToggle() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {

@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+	"github.com/depado/pb-templ-htmx-tailwind/components/icons"
 )
 
 func RegisterForm(rfv RegisterFormValue, rfe RegisterFormErrors, err error) templ.Component {

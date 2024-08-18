@@ -8,7 +8,7 @@ package shared
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/Depado/pb-templ-htmx-tailwind/components/icons"
+import "github.com/depado/pb-templ-htmx-tailwind/components/icons"
 
 func Footer() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -36,7 +36,7 @@ func Footer() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>Copyleft © 2024 - Pretty cool footer huh?</p></aside><nav class=\"grid-flow-col gap-4 md:place-self-center md:justify-self-end\"><a href=\"https://github.com/Depado/pb-templ-htmx-tailwind\" target=\"_blank\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>Copyleft © 2024 - Pretty cool footer huh?</p></aside><nav class=\"grid-flow-col gap-4 md:place-self-center md:justify-self-end\"><a href=\"https://github.com/depado/pb-templ-htmx-tailwind\" target=\"_blank\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -9,8 +9,8 @@ import (
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
-	_ "github.com/Depado/pb-templ-htmx-tailwind/migrations"
-	"github.com/Depado/pb-templ-htmx-tailwind/router"
+	_ "github.com/depado/pb-templ-htmx-tailwind/migrations"
+	"github.com/depado/pb-templ-htmx-tailwind/router"
 )
 
 func main() {

@@ -3,11 +3,12 @@ package router
 import (
 	"net/http"
 
-	"github.com/Depado/pb-templ-htmx-tailwind/components"
-	"github.com/Depado/pb-templ-htmx-tailwind/htmx"
-	"github.com/Depado/pb-templ-htmx-tailwind/models"
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
+
+	"github.com/depado/pb-templ-htmx-tailwind/components"
+	"github.com/depado/pb-templ-htmx-tailwind/htmx"
+	"github.com/depado/pb-templ-htmx-tailwind/models"
 )
 
 func (ar *AppRouter) ToggleArchive(c echo.Context) error {

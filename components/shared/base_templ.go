@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import pbmodels "github.com/pocketbase/pocketbase/models"
-import "github.com/Depado/pb-templ-htmx-tailwind/models"
+import "github.com/depado/pb-templ-htmx-tailwind/models"
 
 // Context is the base context that needs to be injected in all pages
 type Context struct {
