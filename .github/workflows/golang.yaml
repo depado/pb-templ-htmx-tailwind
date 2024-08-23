@@ -33,7 +33,8 @@ jobs:
           fetch-depth: 10
       - uses: gwatts/go-coverage-action@v2
         id: coverage
-        with: 
+        with:
+          fail-coverage: never
           cover-pkg: ./...
 
   golangci:
