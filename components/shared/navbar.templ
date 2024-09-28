@@ -17,6 +17,16 @@ templ Drawer(c Context) {
 			<ul class="menu">
 				if c.User != nil {
 					<li>
+						<div class="flex">
+							@icons.User(true)
+							<div class="flex flex-col">
+								<h3 class="font-bold">{ c.User.Username() }</h3>
+								<span class="text-xs">{ c.User.Email() }</span>
+							</div>
+						</div>
+					</li>
+					<li class="separator"></li>
+					<li>
 						<a
 							hx-get="/settings"
 							hx-trigger="click"
