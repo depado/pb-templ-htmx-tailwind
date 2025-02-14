@@ -1,4 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", ":automergeMinor", ":automergeDigest"]
+  "extends": ["config:best-practices", ":automergeMinor", ":automergeDigest"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["github.com/pocketbase/pocketbase"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["github.com/labstack/echo/v5"],
+      "enabled": false
+    }
+  ]
 }
