@@ -17,12 +17,8 @@ templ: # Generate templ files
 assets: # Generate CSS based on templ files
 	bun run tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css
 
-.PHONY: embed
-embed: templ assets # Embed generated assets
-	go generate ./...
-
 .PHONY: build
-build: embed # Generate, embed and build with proper flags
+build: templ assets # Generate, embed and build with proper flags
 	go build -ldflags="-s -w" -o ptht
 
 .PHONY: run
