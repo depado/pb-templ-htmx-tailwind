@@ -32,7 +32,7 @@ func (lfv LoginFormValue) Validate() (LoginFormErrors, error) {
 		Password: validation.Validate(lfv.Password, validation.Required.Error("Required")),
 	}
 	if lfe.Identifier != nil || lfe.Password != nil {
-		return lfe, fmt.Errorf("Validation error")
+		return lfe, fmt.Errorf("validation error")
 	}
 
 	return lfe, nil

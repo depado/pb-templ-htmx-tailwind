@@ -22,7 +22,7 @@ func (ar *AppRouter) Login(c echo.Context, identifier string, password string) e
 		user, err = ar.App.Dao().FindAuthRecordByUsername("users", identifier)
 		if err != nil {
 			ar.App.Logger().Error("unknown user", "identifier", identifier)
-			return fmt.Errorf("Invalid credentials.")
+			return fmt.Errorf("invalid credentials")
 		}
 	}
 
@@ -30,7 +30,7 @@ func (ar *AppRouter) Login(c echo.Context, identifier string, password string) e
 	valid := user.ValidatePassword(password)
 	if !valid {
 		ar.App.Logger().Error("wrong password", "identifier", identifier, "id", user.Id)
-		return fmt.Errorf("Invalid credentials.")
+		return fmt.Errorf("invalid credentials")
 	}
 
 	ar.App.Logger().Debug("user signed-in", "identifier", identifier, "id", user.Id)

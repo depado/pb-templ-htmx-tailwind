@@ -37,11 +37,11 @@ func (rfv RegisterFormValue) Validate() (RegisterFormErrors, error) {
 	}
 
 	if rfv.Password != "" && rfv.PasswordRepeat != "" && rfv.Password != rfv.PasswordRepeat {
-		rfe.PasswordRepeat = fmt.Errorf("Passwords don't match")
+		rfe.PasswordRepeat = fmt.Errorf("passwords don't match")
 	}
 
 	if rfe.Email != nil || rfe.Username != nil || rfe.Password != nil || rfe.PasswordRepeat != nil {
-		return rfe, fmt.Errorf("Validation error")
+		return rfe, fmt.Errorf("validation error")
 	}
 
 	return rfe, nil

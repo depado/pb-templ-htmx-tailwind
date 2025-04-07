@@ -16,12 +16,12 @@ import (
 func (ar *AppRouter) Register(c echo.Context, email, username, password, passwordRepeat string) error {
 	user, _ := ar.App.Dao().FindAuthRecordByEmail("users", email)
 	if user != nil {
-		return fmt.Errorf("Email or username already taken.")
+		return fmt.Errorf("email or username already taken")
 	}
 
 	user, _ = ar.App.Dao().FindAuthRecordByUsername("users", username)
 	if user != nil {
-		return fmt.Errorf("Email or username already taken.")
+		return fmt.Errorf("email or username already taken")
 	}
 
 	collection, err := ar.App.Dao().FindCollectionByNameOrId("users")
@@ -32,15 +32,15 @@ func (ar *AppRouter) Register(c echo.Context, email, username, password, passwor
 	newUser := models.NewRecord(collection)
 	if err := newUser.SetPassword(password); err != nil {
 		ar.App.Logger().Error("setting password failed", "error", err)
-		return fmt.Errorf("Internal error")
+		return fmt.Errorf("internal error")
 	}
 	if err := newUser.SetEmail(email); err != nil {
 		ar.App.Logger().Error("setting email failed", "error", err)
-		return fmt.Errorf("Internal error")
+		return fmt.Errorf("internal error")
 	}
 	if err := newUser.SetUsername(username); err != nil {
 		ar.App.Logger().Error("setting username failed", "error", err)
-		return fmt.Errorf("Internal error")
+		return fmt.Errorf("internal error")
 	}
 
 	if err = ar.App.Dao().SaveRecord(newUser); err != nil {
