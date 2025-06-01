@@ -10,7 +10,7 @@ require (
 	github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
 	github.com/pocketbase/dbx v1.11.0
 	github.com/pocketbase/pocketbase v0.22.27
-	github.com/spf13/cast v1.8.0
+	github.com/spf13/cast v1.9.1
 )
 
 require (
