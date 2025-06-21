@@ -1,5 +1,5 @@
 # Bun step, simply to copy bun binary
-FROM oven/bun:1.2.16-debian@sha256:df45cf7e7578b31c5888a270fa9fad9ba6939d239b6d3e907118cf986b861077 as bun
+FROM oven/bun:1.2.17-debian@sha256:836de3ffa174c6b5812503e7182b67bfba69518f577c8c162b4ea78980d11c9d as bun
 
 # Builder step
 FROM golang:1.24-bookworm@sha256:ee7ff13d239350cc9b962c1bf371a60f3c32ee00eaaf0d0f0489713a87e51a67 as builder
