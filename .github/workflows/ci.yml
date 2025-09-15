@@ -31,6 +31,9 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with: 
           fetch-depth: 10
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
+        with: 
+          go-version: stable
       - uses: lazyguru/go-coverage-action@9b496d245c69f85ab8cef4ce57d857cc727506ee
         id: coverage
         with:
@@ -55,3 +58,14 @@ jobs:
         with:
           version: latest
           args: --timeout=3m
+
+  docker:
+    name: Docker
+    needs: [golangci,coverage]
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+    uses: depado/github-actions/.github/workflows/docker.yml@main
+    secrets:
+      cleanup-token: ${{ secrets.PAT_DELETE_PACKAGES }}
