@@ -2,7 +2,7 @@
 FROM oven/bun:1.3.5-debian@sha256:b5cf5ca5dc3e2a02d805802ba089401c4beabf597daabbf35a17b8e82dc2f7bc as bun
 
 # Builder step
-FROM golang:1.25-bookworm@sha256:09f53deea14d4019922334afe6258b7b776afc1d57952be2012f2c8c4076db05 as builder
+FROM golang:1.25-bookworm@sha256:01762abf6fea478a3bdf5778b1453c734f1780baf1b96655d42e0ebf2fa2b73b as builder
 
 # Setup bun
 COPY --chown=root:root --from=bun /usr/local/bin/bun /root/.bun/bin/
