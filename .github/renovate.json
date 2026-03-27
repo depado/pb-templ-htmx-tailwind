@@ -9,6 +9,11 @@
     {
       "matchPackageNames": ["github.com/labstack/echo/v5"],
       "enabled": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["depado/github-actions"],
+      "pinDigests": false
     }
   ]
 }
