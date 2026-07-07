@@ -2,7 +2,7 @@ module github.com/depado/pb-templ-htmx-tailwind
 
 go 1.25.0
 
-toolchain go1.26.4
+toolchain go1.26.5
 
 require (
 	github.com/a-h/templ v0.3.1020
